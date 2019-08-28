@@ -13,7 +13,7 @@ fun dogHello(): String {
 ```
 
 It is tempting, however, to simply return null, and propagate it through the layers of the program.
-The elvis operator - `?:` makes it extremly easy.
+The elvis operator - `?:` makes it extremely easy.
 Simply add `?: return null` everywhere the compiler complains about nullability:
 ```
 fun dogHello(): String? {
@@ -47,7 +47,7 @@ fun main() {
 
 - `?` explosion
 
-   Frivoulous `?` tend to proliferate accros the code base.
+   Frivoulous `?` tend to proliferate across the code base.
    Having multiple nullable variables defeats the main advantage of Kotlin.
 
 ## Solution
@@ -62,7 +62,7 @@ For example, you can implement a version of Either.
 It is a shame that Kotlin std library doesn't have this structure already.
 
 # 2. Also this is null
-Credists for naming this antipattern goes to
+Credits for naming this antipattern goes to
 [Paul Blundell](https://blog.novoda.com/kotlin-anti-patterns-also-this-is-ull/).
 ## Description
 ```
@@ -78,12 +78,12 @@ The code inside the lambda will be executed only if `dog` is not null.
 - This expression has the same structure as the good old `if (dog != null) {`.
 
    If there are multiple ways of writing the same thing,
-   choose the syntax more natural to most programmers.
+   choose the syntax which is more natural to most programmers.
    Newcomers from Java world will thank you.
    
 - There's a micro-scope with the `it` variable.
 
-   It takes a few seconds to be compiled in some readers' brains.
+   It takes a few seconds to be compiled in some brains.
    
 - It looks like a functional code, but actually is a sequence of imperative commands.
 ## Solution
@@ -98,7 +98,7 @@ if (dog != null) {
 Remember that `if ` and `when` can also be used as expressions.
 
 I have to admit, that sometimes this structure is helpful when you really don't want to
-introduce a new variable.
+introduce a new variable:
 ```
 a.b.c?.also {
   it.d()
@@ -119,20 +119,20 @@ a()?.b()?.c()?.d()
 ## Why does it smell?
 
 Long chains of calls are suspicious [in general](https://en.wikipedia.org/wiki/Law_of_Demeter).
-The `?.` operator allows you to write a chain of calls in places where you
-would have to stop and think if you had to write the same code in Java.
+The `?.` operator allows you to write chains of calls in places where you
+would have to stop and think, if you had to write the same code in Java.
 Just because it's possible, doesn't mean it is a good idea.
 
 Another problem with chained `?.` is that the operator is left-associative:
 ```
 a()?.b()?.c()?.d()
 ```
-is the same as
+is the same as:
 ```
 ((a()?.b())?.c())?.d()
 ```
 Even if only the first call returns a nullable expression, the whole chain is infected with nullability.
-This makes it harder to read what can be null in the chain.
+This makes it harder to understand what causes the null in the chain.
 
 ## Solution
 
@@ -150,8 +150,8 @@ Suppose you have a `List<Pair<String, Int?>>`.
 You want to filter out the pairs with nulls, in such a way that the resulting expression
 is of type `List<Pair<String, Int>>`.
 
-This is a common problem, because such lists of pairs are often an argument of `mapOf()`.
-A typical solution on [Stackoverflow](https://stackoverflow.com/a/49347526/4076606) suggests doing this:
+This is a common problem, because such lists of pairs are often passed as arguments of `mapOf()`.
+A typical solution on [Stackoverflow](https://stackoverflow.com/a/49347526/4076606) suggests this:
 
 ```
 val map = listOf(Pair("a", 1), Pair("b", null), Pair("c", 3), Pair("d", null))
@@ -193,6 +193,6 @@ Kotlin makes it natural with extensions:
 fun <K, T: Any> Map<K, T?>.filterEntriesWithNullValues(): Map<K, T> {
 ```
 
-Now you can put as many clever tricks as you want into the body of this function.
+Now, you can put as many clever tricks as you want into the body of this function.
 The implementation will not be inspected by readers,
 because the name and the signature are descriptive enough.
