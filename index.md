@@ -61,7 +61,7 @@ Don't be lazy - there are better alternatives.
 For example, you can implement a version of Either.
 It is a shame that Kotlin std library doesn't have this structure already.
 
-# Also this is null
+# 2. Also this is null
 Credists for naming this antipattern goes to
 [Paul Blundell](https://blog.novoda.com/kotlin-anti-patterns-also-this-is-ull/).
 ## Description
@@ -110,7 +110,7 @@ However, don't be fooled - you are actually introducing a new variable.
 It is called `it` and it is not a good name for a variable as 
 it - the name of the `it` variable is too generic.
 
-# Coalesce train ?.?.?.?.
+# 3. Coalesce train ?.?.?.?.
 
 ## Description
 ```
@@ -144,7 +144,7 @@ a()?.run { b().c().d() }
 ```
 
 
-# Code golfing with scope functions
+# 4. Code golfing with scope functions
 ## Description
 Suppose you have a `List<Pair<String, Int?>>`.
 You want to filter out the pairs with nulls, in such a way that the resulting expression
